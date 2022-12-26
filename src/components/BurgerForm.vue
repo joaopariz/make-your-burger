@@ -17,7 +17,9 @@
           <label for="pao">Escolha o pão:</label>
           <select name="pao" id="pao" v-model="pao">
             <option value="" disabled selected>Selecione o seu pão</option>
-            <option value="integral">Integral</option>
+            <option :value="pao.tipo" v-for="pao in paes" :key="pao.id">
+              {{ pao.tipo }}
+            </option>
           </select>
         </div>
         <div class="input-container">
@@ -26,21 +28,27 @@
             <option value="" disabled selected>
               Selecione o tipo de carne
             </option>
-            <option value="maminha">Maminha</option>
+            <option :value="carne.tipo" v-for="carne in carnes" :key="carne.id">
+              {{ carne.tipo }}
+            </option>
           </select>
         </div>
         <div class="input-container opcionais-container">
           <label id="opcionais-title" for="opcionais"
             >Selecione os opcionais:</label
           >
-          <div class="checkbox-container">
+          <div
+            class="checkbox-container"
+            v-for="opcional in opcionaisdata"
+            :key="opcional.id"
+          >
             <input
               type="checkbox"
               name="opcionais"
               v-model="opcionais"
-              value="Salame"
+              :value="opcional.tipo"
             />
-            <span>Salame</span>
+            <span>{{ opcional.tipo }}</span>
           </div>
         </div>
         <div class="input-container">
@@ -54,6 +62,32 @@
 <script>
 export default {
   name: "BurgerForm",
+  data() {
+    return {
+      paes: null,
+      carnes: null,
+      opcionaisdata: null,
+      nome: null,
+      pao: null,
+      carne: null,
+      opcionais: [],
+      status: "Solicitado",
+      msg: null,
+    };
+  },
+  methods: {
+    async getIngredientes() {
+      const req = await fetch("http://localhost:3000/ingredientes");
+      const data = await req.json();
+
+      this.paes = data.paes;
+      this.carnes = data.carnes;
+      this.opcionaisdata = data.opcionais;
+    },
+  },
+  mounted() {
+    this.getIngredientes();
+  },
 };
 </script>
 
@@ -82,6 +116,7 @@ select {
   padding: 5px 10px;
   width: 300px;
 }
+
 .opcionais-container {
   flex-direction: row;
   flex-wrap: wrap;
