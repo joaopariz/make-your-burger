@@ -18,6 +18,7 @@ export default {
   background-image: url("/public/img/burger.jpg");
   background-position: 0 -250px;
   background-size: cover;
+  background-repeat: no-repeat;
   height: 500px;
 }
 
