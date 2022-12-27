@@ -130,6 +130,17 @@
       ],
       "status": "Solicitado",
       "id": 5
+    },
+    {
+      "nome": "João Pariz",
+      "carne": "Veggie burger",
+      "pao": "Integral",
+      "opcionais": [
+        "Pepino",
+        "Tomate"
+      ],
+      "status": "Solicitado",
+      "id": 6
     }
   ]
 }
